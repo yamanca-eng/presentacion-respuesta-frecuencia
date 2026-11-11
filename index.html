@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Respuesta en Frecuencia H(ω) - Análisis Interactivo</title>
+  
+  <!-- CSS de Reveal.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+  
+  <style>
+    .reveal section {
+      font-size: 0.85em;
+    }
+    .controls-panel {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      align-items: center;
+      font-size: 0.65em;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+    .chart-container-double {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    .chart-box-half {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 10px;
+      height: 310px;
+      width: 48%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .chart-box-full {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 10px;
+      height: 330px;
+      width: 95%;
+      margin: 0 auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    input[type=range], select {
+      cursor: pointer;
+    }
+    .concept-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      text-align: left;
+      font-size: 0.75em;
+    }
+    .concept-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px;
+      border-left: 4px solid #007acc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Diapositiva 1: Portada -->
+      <section style="text-align: center;">
+        <h2 style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">RESPUESTA EN FRECUENCIA $H(\Omega)$</h2>
+        <h3 style="font-size: 1.1em; margin-bottom: 25px; color: #ddd;">ANÁLISIS DINÁMICO DE SISTEMAS LTI CONTINUOS</h3>
+        
+        <p style="font-size: 0.85em; font-weight: bold; margin-bottom: 5px;">SEÑALES Y SISTEMAS</p>
+        <p style="font-size: 0.8em; font-weight: bold; margin-bottom: 20px; color: #007acc;">GRUPO 3</p>
+        
+        <div style="font-size: 0.65em; line-height: 1.8;">
+          <p style="margin: 3px 0;">AMANCA ASLLA YOHAN FABRISIO</p>
+          <p style="margin: 3px 0;">CHAMBI COSSI JHON CARLOS</p>
+          <p style="margin: 3px 0;">COYLLA SALAS EDUARDO PATRICK</p>
+          <p style="margin: 3px 0;">HUARHUA PUMARAYME YADIR EMERY</p>
+        </div>
+      </section>
+
+      <!-- Diapositiva 2: Fundamento Matemático -->
+      <section>
+        <h3>1. Definición y Autofunciones de Sistemas LTI</h3>
+        <p style="text-align: left; font-size: 0.8em;">
+          Las exponenciales complejas $e^{j\omega t}$ son <strong>autofunciones</strong> de los sistemas Lineales e Invariantes en el Tiempo (LTI). Si la entrada es $x(t) = e^{j\omega t}$, la salida es:
+        </p>
+        <p>$$y(t) = H(\omega) \cdot e^{j\omega t}$$</p>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <h4>Dominio Temporal (Convolución)</h4>
+            <p>$$y(t) = x(t) * h(t) = \int_{-\infty}^{\infty} x(\tau)h(t-\tau)d\tau$$</p>
+            <p>Operación compleja e integral de evaluar.</p>
+          </div>
+          <div class="concept-card">
+            <h4>Dominio Frecuencial (Multiplicación)</h4>
+            <p>$$Y(\omega) = H(\omega) \cdot X(\omega)$$</p>
+            <p>Transforma la convolución en un producto algebraico simple.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Diapositiva 3: Magnitud y Fase -->
+      <section>
+        <h3>2. Componentes de $H(\omega)$: Magnitud y Fase</h3>
+        <p style="text-align: left; font-size: 0.75em;">
+          La respuesta en frecuencia es una función compleja que se expresa en forma polar como:
+        </p>
+        <p>$$H(\omega) = |H(\omega)| \, e^{j \angle H(\omega)}$$</p>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <h4>Respuesta de Magnitud $|H(\omega)|$</h4>
+            <p>Representa la <strong>ganancia o atenuación</strong> del sistema para cada frecuencia $\omega$. En decibelios ($\text{dB}$):</p>
+            <p>$$|H(\omega)|_{\text{dB}} = 20 \log_{10} |H(\omega)|$$</p>
+          </div>
+          <div class="concept-card">
+            <h4>Respuesta de Fase $\angle H(\omega)$</h4>
+            <p>Representa el <strong>desfasaje angular</strong> ($\theta$) introducido por el sistema a los componentes sinusoidales:</p>
+            <p>$$\angle H(\omega) = \arctan\left(\frac{\text{Im}(H(\omega))}{\text{Re}(H(\omega))}\right)$$</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Diapositiva 4: Simulador 1 - Diagrama de Bode -->
+      <section>
+        <h3>3. Simulador 1: Diagramas de Bode ($|H(f)|$ y $\angle H(f)$)</h3>
+        
+        <div class="controls-panel">
+          <label>Filtro: 
+            <select id="tipoFiltro">
+              <option value="pasaBajos">Pasa-Bajos RC</option>
+              <option value="pasaAltos">Pasa-Altos CR</option>
+            </select>
+          </label>
+          <label>Frecuencia de corte $f_c$: <b id="fcVal">500</b> Hz</label>
+          <input type="range" id="fcSlider" min="100" max="2000" step="50" value="500">
+        </div>
+
+        <div class="chart-container-double">
+          <div class="chart-box-half">
+            <canvas id="bodeMagChart"></canvas>
+          </div>
+          <div class="chart-box-half">
+            <canvas id="bodePhaseChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Diapositiva 5: Efecto en la Señal en el Tiempo -->
+      <section>
+        <h3>4. Respuesta Temporal a Entradas Sinusoidales</h3>
+        <p style="text-align: left; font-size: 0.75em;">
+          Dada una entrada cosenoidal $x(t) = A \cos(2\pi f t)$, la salida permanente $y(t)$ del sistema LTI está dada por:
+        </p>
+        <p>$$y(t) = A \cdot |H(f)| \cdot \cos\Big(2\pi f t + \angle H(f)\Big)$$</p>
+        <ul style="font-size: 0.7em; text-align: left;">
+          <li><strong>Atenuación de Amplitud:</strong> La nueva amplitud es multiplicada por $|H(f)|$.</li>
+          <li><strong>Desplazamiento Temporal:</strong> La señal se desplaza en el tiempo un intervalo $\Delta t = -\frac{\angle H(f)}{2\pi f}$.</li>
+        </ul>
+      </section>
+
+      <!-- Diapositiva 6: Simulador 2 - Entrada vs Salida -->
+      <section>
+        <h3>5. Simulador 2: Filtrado y Desfasaje en el Tiempo</h3>
+        
+        <div class="controls-panel">
+          <label>Frecuencia Entrada $f_{in}$: <b id="finVal">200</b> Hz</label>
+          <input type="range" id="finSlider" min="50" max="2000" step="25" value="200">
+          <span>(Filtro Pasa-Bajos con $f_c = 500\text{ Hz}$)</span>
+        </div>
+
+        <div class="chart-box-full">
+          <canvas id="timeSignalChart"></canvas>
+        </div>
+      </section>
+
+      <!-- Diapositiva 7: Clasificación de Filtros -->
+      <section>
+        <h3>6. Clasificación de Filtros según $H(\omega)$</h3>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <h4>Pasa-Bajos (Low-Pass)</h4>
+            <p>Permite el paso de frecuencias por debajo de $\omega_c$. Atenúa frecuencias altas.</p>
+          </div>
+          <div class="concept-card">
+            <h4>Pasa-Altos (High-Pass)</h4>
+            <p>Permite el paso de frecuencias por encima de $\omega_c$. Bloquea componentes DC y bajas frecuencias.</p>
+          </div>
+          <div class="concept-card">
+            <h4>Pasa-Banda (Band-Pass)</h4>
+            <p>Deja pasar un rango o banda fija $[\omega_1, \omega_2]$ y atenúa fuera de ella.</p>
+          </div>
+          <div class="concept-card">
+            <h4>Rechaza-Banda (Notch/Band-Stop)</h4>
+            <p>Elimina una frecuencia específica o banda estrecha (ej. ruido de red de $60\text{ Hz}$).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Diapositiva 8: Conclusiones -->
+      <section>
+        <h3>Conclusiones</h3>
+        <ul style="font-size: 0.75em;">
+          <li>La función de transferencia $H(\omega)$ caracteriza completamente el comportamiento de un sistema LTI ante cualquier entrada armónica.</li>
+          <li>El análisis espectral transforma integrales de convolución en simples productos numéricos.</li>
+          <li>La frecuencia de corte $f_c$ define el punto límite donde la potencia cae a la mitad ($-3\text{ dB}$ o factor $0.707$).</li>
+          <li>Las simulaciones interactivas en JavaScript permiten visualizar directamente los efectos de amplitud y fase sin necesidad de compilación previa.</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Carga de librerías mediante CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/math/math.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Lógica Interactiva -->
+  <script src="js/interactivo.js"></script>
+
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      plugins: [ RevealMath.MathJax2 ]
+    });
+  </script>
+</body>
+</html>
